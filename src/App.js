@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  state = {
+    images: null
+  }
+  componentDidMount() {
+    fetch('https://deckofcardsapi.com/api/deck/2faaps93vetq/draw/?count=4')
+      .then(res => res.json())
+      .then(data => this.setState({
+        images: data.cards
+      }))
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>24</h1>
+        {this.state.images && this.state.images.map((x,idx) => <img src={x.image} key={idx}/>)}
       </div>
     );
   }
